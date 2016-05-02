@@ -1,7 +1,6 @@
 {
     "browser"   : true,
     "es3"       : true,
-    "jquery"    : true,
     "camelcase" : true,
     "newcap"    : true,
     "strict"    : true,
@@ -9,6 +8,7 @@
     "undef"     : true,
     "unused"    : true,
     "quotmark"  : true,
+    "browserify": true,
     "globals"   : {
         "require"   : false,
         "define"    : false
