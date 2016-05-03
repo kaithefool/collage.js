@@ -13,7 +13,7 @@ var defaults = {
 function Img (file, opts) {
     this.opts = util.extend({}, defaults, opts);
     this.file = file;
-    this.el = document.createElement('img');
+    this.setEl();
 
     if (this.opts.uploader) {
         this.upload();
@@ -21,6 +21,14 @@ function Img (file, opts) {
 }
 
 Img.prototype = {
+
+    setEl: function () {
+        this.el = document.createElement('div');
+
+        this.el.innerHTML = '<div class="progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
+        this.bar = this.el.querySelector('.progress-bar');
+        this.text = this.el.querySelector('progress-text');
+    },
 
     readFile: function (file) {
         var reader = new FileReader();
@@ -31,11 +39,20 @@ Img.prototype = {
     },
 
     onread: function (evt) {
-        this.el.src = evt.target.result;
+        this.setBg(evt.target.result);
     },
 
     onerr: function () {
 
+    },
+
+    setBg: function (url) {
+        this.el.style = 'background: url(' + url + ')';
+    },
+
+    setProgress: function (progress) {
+        this.bar.style = 'width: ' + (progress * 100) + '%';
+        this.text.innerHTML = (progress * 100) + '%';
     },
 
     upload: function () {
@@ -47,13 +64,15 @@ Img.prototype = {
     },
 
     onsuccess: function (task, res) {
-        this.el.src = res;
+        this.setBg(res);
     },
 
-    onprogress: function () {
-        
+    onprogress: function (task, progress) {
+        this.setProgress(progress);
     },
 
-    onfail: function () {}
+    onfail: function () {
+        this.text.innerHTML = 'Upload Failed';
+    }
 
 };

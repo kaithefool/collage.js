@@ -46,8 +46,8 @@ UploadTask.prototype = util.extend({
         this.publish('success', this, xhr.responseText, xhr.status);
     },
 
-    onprogress: function () {
-        this.publish('progress', this);
+    onprogress: function (evt) {
+        this.publish('progress', this, evt.loaded / evt.total);
     },
 
     ontimeout: function () {

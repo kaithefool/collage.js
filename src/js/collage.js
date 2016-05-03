@@ -1,8 +1,13 @@
 'use strict';
 
-var FileUploader = require('./lib/FileUploader.js');
+var FileUploader = require('./lib/FileUploader.js'),
+    Img = require('./elements/Img.js');
 
 module.exports = Collage;
+
+var defaults = {
+
+};
 
 function Collage () {
     this.uploader = new FileUploader();
@@ -10,6 +15,10 @@ function Collage () {
 
 Collage.prototype = {
 
-    
+    img: function (file) {
+        return new Img(file, {
+            uploader: this.uploader
+        });
+    }
 
 };
