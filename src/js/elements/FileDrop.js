@@ -1,8 +1,16 @@
 'use strict';
 
+var util = require('./../lib/util.js');
+
 module.exports = FileDrop;
 
-function FileDrop (el) {
+var defaults = {
+    maxsize: 10,
+    format: 'jpe?g|png|gif'
+};
+
+function FileDrop (el, opts) {
+    this.opts = util.extend({}, defaults, opts);
     this.el = el;
     this.input = el.querySelector('input[type="file"]');
 
@@ -16,6 +24,17 @@ function FileDrop (el) {
 
 FileDrop.prototype = {
 
+    validate: function (file) {
+        var size = file.size / (1000000) <= this.opts.maxsize,
+            format = file.name.match('\.(' + this.opts.format + ')$');
+
+        return size && format;
+    },
+
+    ondrag: function () {
+
+    },
+
     ondrop: function (evt) {
         evt.preventDefault();
 
@@ -25,7 +44,14 @@ FileDrop.prototype = {
         // restrict files per drop
         files.splice(20);
 
-        
+        for (var i = 0; i < files.length; i++) {
+            var test = this.validate(files[i]);
+            if (test) {
+
+            } else {
+
+            }
+        }
     }
 
 };
