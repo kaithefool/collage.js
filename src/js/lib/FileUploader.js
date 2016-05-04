@@ -5,8 +5,13 @@ var UploadTask = require('./UploadTask'),
 
 module.exports = FileUploader;
 
-function FileUploader () {
+var defaults = {
+    url: null,
+    params: null
+};
 
+function FileUploader (opts) {
+    this.opts = util.extend({}, defaults, opts);
 }
 
 FileUploader.prototype = {
@@ -19,15 +24,11 @@ FileUploader.prototype = {
 
     processing: [],
 
-    url: null,
-
-    params: null,
-
     upload: function (file, url, params) {
-        url = url ? url : this.url;
-        params = params ? params : this.params;
+        url = url ? url : this.opts.url;
+        params = params ? params : this.opts.params;
 
-        var task = new UploadTask(url, file, params);
+        var task = new UploadTask(url, this.getFormData(file, params));
 
         // callbacks
         task.subscribe('success', this.onsuccess.bind(this));
@@ -41,6 +42,19 @@ FileUploader.prototype = {
         }
 
         return task;
+    },
+
+    getFormData: function (file, params) {
+        var data = new FormData();
+
+        data.append('file', file);
+        if (params instanceof Array) {
+            params.forEach(function (input) {
+                data.append(input.name, input.value);
+            });
+        }
+
+        return data;
     },
 
     run: function (task) {

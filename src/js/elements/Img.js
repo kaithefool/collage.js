@@ -7,7 +7,8 @@ module.exports = Img;
 var defaults = {
     uploader: null,
     url: null,
-    params: null
+    params: null,
+    src: null
 };
 
 function Img (file, opts) {
@@ -25,6 +26,7 @@ Img.prototype = {
     setEl: function () {
         this.el = document.createElement('div');
 
+        this.el.className = 'collage-img';
         this.el.innerHTML = '<div class="progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
         this.bar = this.el.querySelector('.progress-bar');
         this.text = this.el.querySelector('progress-text');
@@ -43,7 +45,7 @@ Img.prototype = {
     },
 
     onerr: function () {
-
+        
     },
 
     setBg: function (url) {

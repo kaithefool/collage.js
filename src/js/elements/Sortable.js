@@ -1,21 +1,25 @@
 'use strict';
 
+var util = require('./../lib/util.js');
+
 module.exports = Sortable;
 
-var defaults = {};
-
-function Sortable () {
+function Sortable (el) {
 
 }
 
-Sortable.prototype = {
+Sortable.prototype = util.extend({
 
-    ondrag: function () {
+    onmousedown: function () {
+        
+    },
+
+    onmouseover: function () {
 
     },
 
-    ondrop: function () {
-        
+    onmouseup: function () {
+
     }
 
-};
+}, util.pubsub);

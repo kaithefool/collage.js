@@ -22,7 +22,7 @@ function FileDrop (el, opts) {
     }
 }
 
-FileDrop.prototype = {
+FileDrop.prototype = util.extend({
 
     validate: function (file) {
         var size = file.size / (1000000) <= this.opts.maxsize,
@@ -32,7 +32,7 @@ FileDrop.prototype = {
     },
 
     ondrag: function () {
-
+        
     },
 
     ondrop: function (evt) {
@@ -47,11 +47,11 @@ FileDrop.prototype = {
         for (var i = 0; i < files.length; i++) {
             var test = this.validate(files[i]);
             if (test) {
-
+                this.publish('file', files[i]);
             } else {
 
             }
         }
     }
 
-};
+}, util.pubsub);

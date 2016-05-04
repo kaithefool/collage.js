@@ -4,16 +4,9 @@ var util = require('./util.js');
 
 module.exports = UploadTask;
 
-function UploadTask (url, file, params) {
+function UploadTask (url, formData) {
     this.url = url;
-
-    this.data = new FormData();
-    this.data.append('file', file);
-    if (params instanceof Array) {
-        params.forEach(function (input) {
-            this.data.append(input.name, input.value);
-        });
-    }
+    this.formData = formData;
 }
 
 UploadTask.prototype = util.extend({
@@ -39,7 +32,7 @@ UploadTask.prototype = util.extend({
         // send the request
         xhr.timeout = 3000;
         xhr.open('post', this.url);
-        xhr.send(this.data);
+        xhr.send(this.formData);
     },
 
     onsuccess: function (xhr) {
