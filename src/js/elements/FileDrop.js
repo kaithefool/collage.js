@@ -9,6 +9,11 @@ var defaults = {
     format: 'jpe?g|png|gif'
 };
 
+function stopEvt (evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+}
+
 function FileDrop (el, opts) {
     this.opts = util.extend({}, defaults, opts);
     this.el = el;
@@ -16,9 +21,10 @@ function FileDrop (el, opts) {
 
     // events
     this.el.addEventListener('drop', this.ondrop.bind(this));
-    this.el.addEventListener('dragdrop', this.ondrop.bind(this));
+    this.el.addEventListener('dragenter', stopEvt);
+    this.el.addEventListener('dragover', stopEvt);
     if (this.input) {
-        this.el.addEventListener('change', this.ondrop.bind(this));
+        this.input.addEventListener('change', this.ondrop.bind(this));
     }
 }
 
@@ -32,19 +38,21 @@ FileDrop.prototype = util.extend({
     },
 
     ondrag: function () {
-        
+
     },
 
     ondrop: function (evt) {
         evt.preventDefault();
 
         // get files
-        var files = evt.currentTarget.files ? evt.currentTarget.files : evt.originalEvent.dataTransfer.files;
-
-        // restrict files per drop
-        files.splice(20);
+        var files = evt.currentTarget.files ? evt.currentTarget.files : evt.dataTransfer.files;
 
         for (var i = 0; i < files.length; i++) {
+            // restrict files per drop
+            if (i > 20) {
+                break;
+            }
+
             var test = this.validate(files[i]);
             if (test) {
                 this.publish('file', files[i]);

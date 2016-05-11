@@ -18,7 +18,13 @@
             </div>
         </div>
         <script>
+            var el = document.getElementsByClassName('collage')[0];
 
+            new Collage(el, {
+                uploader: {
+                    url: 'http://redcherry.dev/admin/image/store'
+                }
+            });
         </script>
     </body>
 </html>

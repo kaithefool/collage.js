@@ -2,6 +2,14 @@
 
 module.exports = {
 
+    matches: function (el, selector) {
+        var p = Element.prototype;
+    	var f = p.matches || p.webkitMatchesSelector || p.mozMatchesSelector || p.msMatchesSelector || function(s) {
+    		return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
+    	};
+    	return f.call(el, selector);
+    },
+
     remove: function (array, el) {
         array.splice(array.indexOf(el), 1);
     },
@@ -25,9 +33,11 @@ module.exports = {
      * @type {Object}
      */
     pubsub: {
-        _observers: {},
-
         subscribe: function (topic, handler) {
+            if (!this._observers) {
+                this._observers = {};
+            }
+
             var a = this._observers[topic];
 
             if (!(a instanceof Array)) {

@@ -15,6 +15,7 @@ function Img (file, opts) {
     this.opts = util.extend({}, defaults, opts);
     this.file = file;
     this.setEl();
+    this.readFile(file);
 
     if (this.opts.uploader) {
         this.upload();
@@ -27,9 +28,12 @@ Img.prototype = {
         this.el = document.createElement('div');
 
         this.el.className = 'collage-img';
-        this.el.innerHTML = '<div class="progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
+
+        // progress
+        this.el.innerHTML = '<div class="collage-progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
+        this.progress = this.el.querySelector('.collage-progress');
         this.bar = this.el.querySelector('.progress-bar');
-        this.text = this.el.querySelector('progress-text');
+        this.text = this.el.querySelector('.progress-text');
     },
 
     readFile: function (file) {
@@ -45,28 +49,30 @@ Img.prototype = {
     },
 
     onerr: function () {
-        
+
     },
 
     setBg: function (url) {
-        this.el.style = 'background: url(' + url + ')';
+        this.el.style = 'background-image: url(' + url + ')';
     },
 
     setProgress: function (progress) {
-        this.bar.style = 'width: ' + (progress * 100) + '%';
-        this.text.innerHTML = (progress * 100) + '%';
+        progress = Math.round(progress * 100);
+        this.bar.style = 'width: ' + progress + '%';
+        this.text.innerHTML = progress + '%';
     },
 
     upload: function () {
         var task = this.opts.uploader.upload(this.file, this.opts.url, this.opts.params);
 
-        task.subscribe('success', this.onsuccess);
-        task.subscribe('progress', this.onprogress);
-        task.subscribe('fail', this.onfail);
+        task.subscribe('success', this.onsuccess.bind(this));
+        task.subscribe('progress', this.onprogress.bind(this));
+        task.subscribe('fail', this.onfail.bind(this));
     },
 
     onsuccess: function (task, res) {
         this.setBg(res);
+        this.progress.parentNode.removeChild(this.progress);
     },
 
     onprogress: function (task, progress) {

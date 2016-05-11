@@ -66,7 +66,7 @@ FileUploader.prototype = {
         util.remove(this.processing, task);
 
         // run next task
-        if (this.queue.length > 1) {
+        if (this.queue.length >= 1) {
             var next = this.queue[0];
 
             this.run(next);

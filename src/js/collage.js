@@ -20,7 +20,7 @@ function Collage (el, opts) {
     this.uploader = new FileUploader(this.opts.uploader);
 
     if (el) {
-        this.list = this.el.querySelector('.collage-list');
+        this.list = el.querySelector('.collage-list');
 
         if (this.opts.fileDrop) {
             this.filedrop = new FileDrop(el, this.opts.fileDrop);
@@ -28,7 +28,7 @@ function Collage (el, opts) {
         }
 
         if (this.opts.sortable) {
-            this.sortable = new Sortable(el);
+            this.sortable = new Sortable(this.list);
         }
     }
 }
@@ -44,7 +44,7 @@ Collage.prototype = {
     onfile: function (file) {
         var img = this.getImg(file);
 
-        this.list.append(img.el);
+        this.list.appendChild(img.el);
     }
 
 };

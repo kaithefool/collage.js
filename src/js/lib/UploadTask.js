@@ -17,20 +17,20 @@ UploadTask.prototype = util.extend({
         var xhr = this.xhr = new XMLHttpRequest();
 
         // event handlers
-        xhr.onprogress = this.onprogress.bind(this);
+        xhr.upload.onprogress = this.onprogress.bind(this);
         xhr.ontimeout = this.ontimeout.bind(this);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     this.onsuccess(xhr);
-                } else {
+                } else if (xhr.status !== 0) {
                     this.onfail();
                 }
             }
         }.bind(this);
 
         // send the request
-        xhr.timeout = 3000;
+        xhr.timeout = (1000 * 60);
         xhr.open('post', this.url);
         xhr.send(this.formData);
     },
