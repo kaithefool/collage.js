@@ -9,7 +9,7 @@ var FileUploader = require('./lib/FileUploader.js'),
 module.exports = Collage;
 
 var defaults = {
-    uploader: {},
+    uploader: null,
     fileDrop: {},
     sortable: true
 };
@@ -17,7 +17,9 @@ var defaults = {
 function Collage (el, opts) {
     this.opts = util.extend({}, defaults, opts);
 
-    this.uploader = new FileUploader(this.opts.uploader);
+    if (this.opts.uploader) {
+        this.uploader = new FileUploader(this.opts.uploader);
+    }
 
     if (el) {
         this.list = el.querySelector('.collage-list');
@@ -34,6 +36,8 @@ function Collage (el, opts) {
 }
 
 Collage.prototype = {
+
+    uploader: null,
 
     getImg: function (file) {
         return new Img(file, {

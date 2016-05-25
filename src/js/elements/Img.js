@@ -30,10 +30,12 @@ Img.prototype = {
         this.el.className = 'collage-img';
 
         // progress
-        this.el.innerHTML = '<div class="collage-progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
-        this.progress = this.el.querySelector('.collage-progress');
-        this.bar = this.el.querySelector('.progress-bar');
-        this.text = this.el.querySelector('.progress-text');
+        if (this.opts.uploader) {
+            this.el.innerHTML = '<div class="collage-progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
+            this.progress = this.el.querySelector('.collage-progress');
+            this.bar = this.el.querySelector('.progress-bar');
+            this.text = this.el.querySelector('.progress-text');
+        }
     },
 
     readFile: function (file) {
