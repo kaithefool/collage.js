@@ -1,6 +1,7 @@
 'use strict';
 
-var util = require('./../lib/util.js');
+var util = require('./../lib/util.js'),
+    resize = require('./../lib/resize.js');
 
 module.exports = Img;
 
@@ -47,7 +48,9 @@ Img.prototype = {
     },
 
     onread: function (evt) {
-        this.setBg(evt.target.result);
+        var src = resize(evt.target.result, 500, 500);
+
+        this.setBg(src);
     },
 
     onerr: function () {

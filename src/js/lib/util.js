@@ -2,6 +2,12 @@
 
 module.exports = {
 
+    /**
+     * Check if element would be selected by the specified selector string
+     * @param  {[type]} el       [description]
+     * @param  {[type]} selector [description]
+     * @return {[type]}          [description]
+     */
     matches: function (el, selector) {
         var p = Element.prototype;
     	var f = p.matches || p.webkitMatchesSelector || p.mozMatchesSelector || p.msMatchesSelector || function(s) {
@@ -10,6 +16,9 @@ module.exports = {
     	return f.call(el, selector);
     },
 
+    /**
+     * Remove value from array
+     */
     remove: function (array, el) {
         array.splice(array.indexOf(el), 1);
     },

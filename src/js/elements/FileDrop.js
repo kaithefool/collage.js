@@ -57,7 +57,7 @@ FileDrop.prototype = util.extend({
             if (test) {
                 this.publish('file', files[i]);
             } else {
-
+                this.publish('invalid', files[i]);
             }
         }
     }
