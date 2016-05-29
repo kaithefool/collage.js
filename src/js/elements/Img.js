@@ -8,18 +8,24 @@ module.exports = Img;
 var defaults = {
     uploader: null,
     url: null,
-    params: null,
-    src: null
+    params: null
 };
 
-function Img (file, opts) {
+function Img (src, opts) {
     this.opts = util.extend({}, defaults, opts);
-    this.file = file;
-    this.setEl();
-    this.readFile(file);
 
-    if (this.opts.uploader) {
-        this.upload();
+    if (src instanceof File) {
+        // if file is provided as source
+        this.file = src;
+        this.setEl();
+        this.readFile(src);
+
+        if (this.opts.uploader) {
+            this.upload();
+        }
+    } else {
+        // url as source
+        this.setBg(src);
     }
 }
 
@@ -57,8 +63,8 @@ Img.prototype = {
 
     },
 
-    setBg: function (url) {
-        this.el.style = 'background-image: url(' + url + ')';
+    setBg: function (src) {
+        this.el.style = 'background-image: url(' + src + ')';
     },
 
     setProgress: function (progress) {

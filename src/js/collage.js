@@ -11,13 +11,13 @@ module.exports = Collage;
 var defaults = {
     uploader: null,
     fileDrop: {},
-    sortable: true,
-    media: []
+    sortable: true
 };
 
 function Collage (el, opts) {
     this.opts = util.extend({}, defaults, opts);
 
+    // setup uploader
     if (this.opts.uploader) {
         this.uploader = new FileUploader(this.opts.uploader);
     }
@@ -40,16 +40,28 @@ Collage.prototype = {
 
     uploader: null,
 
-    getImg: function (file) {
-        return new Img(file, {
+    add: function (items) {
+        if (Array.isArray(items)) {
+            items.forEach(function (item) {
+                this._add(item);
+            }.bind(this));
+        }
+    },
+
+    _add: function (item) {
+        var img = this.getImg(item);
+
+        this.list.appendChild(img.el);
+    },
+
+    getImg: function (src) {
+        return new Img(src, {
             uploader: this.uploader
         });
     },
 
     onfile: function (file) {
-        var img = this.getImg(file);
-
-        this.list.appendChild(img.el);
+        this._add(file);
     }
 
 };
