@@ -13,11 +13,10 @@ function swap (el0, el1) {
 }
 
 function Sortable (el, selector) {
-    this.selector = selector ? selector : '.collage-img';
+    this.selector = selector ? selector : '[draggable]';
 
-    el.addEventListener('mousedown', this.onmousedown.bind(this));
-    el.addEventListener('mousemove', this.onmousemove.bind(this));
-    el.addEventListener('mouseup', this.onmouseup.bind(this));
+    util.on(el, 'dragstart', this.selector, this.ondragstart.bind(this));
+    util.on(el, 'dragover', this.selector, this.ondragover.bind(this));
 
     el.className += 'collage-sortable';
 }
@@ -26,28 +25,26 @@ Sortable.prototype = util.extend({
 
     target: null,
 
-    onmousedown: function (evt) {
-        if (util.matches(evt.target, this.selector)) {
-            this.target = evt.target;
-        }
+    add: function (el) {
+        el.draggable = true;
     },
 
-    onmousemove: function (evt) {
-        if (!this.target) {
-            return;
-        }
+    ondragstart: function (evt) {
+        this.target = evt.target;
+    },
 
-        if (util.matches(evt.target, this.selector) && evt.target !== this.target) {
+    ondragover: function (evt) {
+        if (evt.target !== this.target) {
             swap(evt.target, this.target);
         }
     },
 
-    onmouseup: function () {
+    ondrop: function () {
         this.target = null;
     },
 
     swap: function (el0, el1) {
-        
+
     },
 
     on: function () {}

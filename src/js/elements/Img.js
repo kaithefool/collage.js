@@ -13,31 +13,34 @@ var defaults = {
 
 function Img (src, opts) {
     this.opts = util.extend({}, defaults, opts);
+    this.setEl();
 
     if (src instanceof File) {
         // if file is provided as source
         this.file = src;
-        this.setEl();
+        this.setEl(this.opts.uploader);
         this.readFile(src);
 
+        // upload file
         if (this.opts.uploader) {
             this.upload();
         }
     } else {
         // url as source
+        this.setEl();
         this.setBg(src);
     }
 }
 
 Img.prototype = {
 
-    setEl: function () {
+    setEl: function (progress) {
         this.el = document.createElement('div');
 
         this.el.className = 'collage-img';
 
         // progress
-        if (this.opts.uploader) {
+        if (progress) {
             this.el.innerHTML = '<div class="collage-progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
             this.progress = this.el.querySelector('.collage-progress');
             this.bar = this.el.querySelector('.progress-bar');

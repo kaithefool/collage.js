@@ -16,6 +16,14 @@ module.exports = {
     	return f.call(el, selector);
     },
 
+    on: function (el, evtType, selector, callback) {
+        el.addEventListener(evtType, function (evt) {
+            if (this.matches(evt.target, selector)) {
+                callback.apply(window, arguments);
+            }
+        }.bind(this));
+    },
+
     /**
      * Remove value from array
      */

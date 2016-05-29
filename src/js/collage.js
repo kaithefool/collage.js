@@ -36,7 +36,7 @@ function Collage (el, opts) {
     }
 }
 
-Collage.prototype = {
+Collage.prototype = util.extend({
 
     uploader: null,
 
@@ -52,6 +52,11 @@ Collage.prototype = {
         var img = this.getImg(item);
 
         this.list.appendChild(img.el);
+
+        // sortable
+        if (this.sortable) {
+            this.sortable.add(img.el);
+        }
     },
 
     getImg: function (src) {
@@ -64,4 +69,4 @@ Collage.prototype = {
         this._add(file);
     }
 
-};
+}, util.pubsub);
