@@ -18,9 +18,15 @@
             </div>
         </div>
         <script>
-            var el = document.getElementsByClassName('collage')[0];
+            var el = document.getElementsByClassName('collage')[0],
+                collage = new Collage(el);
 
-            new Collage(el);
+            collage.add([
+                'img/01.jpg',
+                'img/02.jpg',
+                'img/03.jpg',
+                'img/04.jpg'
+            ]);
         </script>
     </body>
 </html>
