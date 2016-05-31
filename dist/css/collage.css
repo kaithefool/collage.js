@@ -51,10 +51,3 @@ form.collage-upload input[type="file"] {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-/* line 44, src/less/collage.less */
-.collage-sortable [draggable].sortable-transition {
-  -webkit-transition: -webkit-transform 0.5s;
-  -moz-transition: -moz-transform 0.5s;
-  -o-transition: -o-transform 0.5s;
-  transition: -webkit-transform 0.5s,-moz-transform 0.5s,-o-transform 0.5s,transform 0.5s;
-}

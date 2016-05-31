@@ -2,10 +2,16 @@
 
 module.exports = {
 
+    transition: function (el, transition) {
+        el.style.webkitTransition = transition;
+        el.style.MozTransition = transition;
+        el.style.OTransition = transition;
+        el.style.transition = transition;
+    },
+
     transform: function (el, transform) {
         el.style.webkitTransform = transform;
         el.style.MozTransform = transform;
-        el.style.msTransform = transform;
         el.style.OTransform = transform;
         el.style.transform = transform;
     },
