@@ -50,7 +50,7 @@ FileDrop.prototype = util.extend({
 
         for (var i = 0; i < files.length; i++) {
             // restrict files per drop
-            if (i > this.filesPerDrop) {
+            if (i >= this.filesPerDrop) {
                 break;
             }
 
