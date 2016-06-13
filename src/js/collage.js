@@ -11,7 +11,7 @@ module.exports = Collage;
 var defaults = {
     uploader: null,
     fileDrop: {},
-    sortable: true
+    sortable: false
 };
 
 function Collage (el, opts) {

@@ -21,7 +21,9 @@
         </div>
         <script>
             var el = document.getElementsByClassName('collage')[0],
-                collage = new Collage(el);
+                collage = new Collage(el, {
+                    sortable: true
+                });
 
             collage.add([
                 'img/01.jpg',
