@@ -17,39 +17,48 @@ var defaults = {
 
 function Collage (el, opts) {
     this.opts = util.extend({}, defaults, opts);
+    this.el = el;
 
+    var form = el.querySelector('form');
     if (this.opts.uploader) {
         this.uploader = new FileUploader(this.opts.uploader);
+    } else if (form) {
+        this.uploader = new FileUploader({
+            form: form
+        });
     }
 
     if (el) {
-        this.list = el.querySelector('.collage-list');
-
         if (this.opts.fileDrop) {
             this.filedrop = new FileDrop(el, this.opts.fileDrop);
             this.filedrop.subscribe('file', this.onfile.bind(this));
         }
 
         if (this.opts.sortable) {
+            this.list = el.querySelector('.collage-list');
             this.sortable = new Sortable(this.list);
         }
     }
 }
 
-Collage.prototype = {
+Collage.prototype = util.extend({
 
     uploader: null,
 
-    getImg: function (file) {
+    img: function (file) {
         return new Img(file, {
             uploader: this.uploader
         });
     },
 
     onfile: function (file) {
-        var img = this.getImg(file);
+        var img = this.img(file);
 
-        this.list.appendChild(img.el);
+        if (this.list) {
+            this.list.appendChild(img.el);
+        }
+
+        this.publish('onfile', img);
     }
 
-};
+}, util.pubsub);

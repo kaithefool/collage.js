@@ -7,7 +7,8 @@ module.exports = FileUploader;
 
 var defaults = {
     url: null,
-    params: null
+    params: null,
+    form: null
 };
 
 function FileUploader (opts) {
@@ -25,7 +26,7 @@ FileUploader.prototype = {
     processing: [],
 
     upload: function (file, url, params) {
-        url = url ? url : this.opts.url;
+        url = url ? url : (this.opts.url ? this.opts.url : this.opts.form.action);
         params = params ? params : this.opts.params;
 
         var task = new UploadTask(url, this.getFormData(file, params));
@@ -45,7 +46,7 @@ FileUploader.prototype = {
     },
 
     getFormData: function (file, params) {
-        var data = new FormData();
+        var data = new FormData(this.opts.form);
 
         data.append('file', file);
         if (params instanceof Array) {

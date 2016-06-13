@@ -11,7 +11,7 @@ function resize (src, width, height) {
     canvas.height = dimension.height;
     ctx.drawImage(img, 0, 0, dimension.width, dimension.height);
 
-    return canvas.toDataURL('image/jpeg');
+    return canvas.toDataURL('image/png');
 }
 
 function scale (img, max) {
