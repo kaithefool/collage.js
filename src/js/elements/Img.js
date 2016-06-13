@@ -8,30 +8,39 @@ module.exports = Img;
 var defaults = {
     uploader: null,
     url: null,
-    params: null,
-    src: null
+    params: null
 };
 
-function Img (file, opts) {
+function Img (src, opts) {
     this.opts = util.extend({}, defaults, opts);
-    this.file = file;
     this.setEl();
-    this.readFile(file);
 
-    if (this.opts.uploader) {
-        this.upload();
+    if (src instanceof File) {
+        // if file is provided as source
+        this.file = src;
+        this.setEl(this.opts.uploader);
+        this.readFile(src);
+
+        // upload file
+        if (this.opts.uploader) {
+            this.upload();
+        }
+    } else {
+        // url as source
+        this.setEl();
+        this.setBg(src);
     }
 }
 
 Img.prototype = {
 
-    setEl: function () {
+    setEl: function (progress) {
         this.el = document.createElement('div');
 
         this.el.className = 'collage-img';
 
         // progress
-        if (this.opts.uploader) {
+        if (progress) {
             this.el.innerHTML = '<div class="collage-progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
             this.progress = this.el.querySelector('.collage-progress');
             this.bar = this.el.querySelector('.progress-bar');
@@ -57,8 +66,8 @@ Img.prototype = {
 
     },
 
-    setBg: function (url) {
-        this.el.style = 'background-image: url(' + url + ')';
+    setBg: function (src) {
+        this.el.style = 'background-image: url(' + src + ')';
     },
 
     setProgress: function (progress) {

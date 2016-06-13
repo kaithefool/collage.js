@@ -1,10 +1,10 @@
-/* line 4, src/less/collage.less */
+/* line 3, src/less/collage.less */
 form.collage-upload {
   height: 200px;
   background-color: #f7f7f7;
   position: relative;
 }
-/* line 8, src/less/collage.less */
+/* line 7, src/less/collage.less */
 form.collage-upload input[type="file"] {
   position: absolute;
   top: 0;
@@ -13,7 +13,7 @@ form.collage-upload input[type="file"] {
   opacity: 0;
   cursor: pointer;
 }
-/* line 17, src/less/collage.less */
+/* line 16, src/less/collage.less */
 .collage-img {
   float: left;
   width: 25%;
@@ -22,14 +22,14 @@ form.collage-upload input[type="file"] {
   background-size: cover;
   background-position: center;
 }
-/* line 24, src/less/collage.less */
+/* line 23, src/less/collage.less */
 .collage-img .collage-progress {
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
 }
-/* line 29, src/less/collage.less */
+/* line 28, src/less/collage.less */
 .collage-img .collage-progress .progress-bar {
   position: absolute;
   height: 100%;
@@ -39,7 +39,7 @@ form.collage-upload input[type="file"] {
   -moz-opacity: 0.7;
   opacity: 0.7;
 }
-/* line 34, src/less/collage.less */
+/* line 33, src/less/collage.less */
 .collage-img .collage-progress .progress-text {
   position: relative;
   top: 50%;

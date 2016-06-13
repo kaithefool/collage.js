@@ -6,7 +6,8 @@ module.exports = FileDrop;
 
 var defaults = {
     maxsize: 10,
-    format: 'jpe?g|png|gif'
+    format: 'jpe?g|png|gif',
+    filesPerDrop: 20
 };
 
 function stopEvt (evt) {
@@ -49,7 +50,7 @@ FileDrop.prototype = util.extend({
 
         for (var i = 0; i < files.length; i++) {
             // restrict files per drop
-            if (i > 20) {
+            if (i > this.filesPerDrop) {
                 break;
             }
 

@@ -2,11 +2,22 @@
 
 module.exports = {
 
+    transition: function (el, transition) {
+        el.style.webkitTransition = transition;
+        el.style.MozTransition = transition;
+        el.style.OTransition = transition;
+        el.style.transition = transition;
+    },
+
+    transform: function (el, transform) {
+        el.style.webkitTransform = transform;
+        el.style.MozTransform = transform;
+        el.style.OTransform = transform;
+        el.style.transform = transform;
+    },
+
     /**
      * Check if element would be selected by the specified selector string
-     * @param  {[type]} el       [description]
-     * @param  {[type]} selector [description]
-     * @return {[type]}          [description]
      */
     matches: function (el, selector) {
         var p = Element.prototype;
@@ -14,6 +25,22 @@ module.exports = {
     		return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
     	};
     	return f.call(el, selector);
+    },
+
+    /**
+     * Event delegation
+     * @param  {Element}    el          Parent Node
+     * @param  {String}     evtType
+     * @param  {String}     selector
+     * @param  {Function}   callback
+     * @return
+     */
+    on: function (el, evtType, selector, callback) {
+        el.addEventListener(evtType, function (evt) {
+            if (this.matches(evt.target, selector)) {
+                callback.apply(window, arguments);
+            }
+        }.bind(this));
     },
 
     /**
