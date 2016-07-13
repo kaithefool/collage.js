@@ -47,7 +47,7 @@ FileUploader.prototype = {
 
     getFormData: function (file, params) {
         var data = new FormData(this.opts.form),
-            inputs = this.opts.form.querySelectorAll('[name]]');
+            inputs = this.opts.form.querySelectorAll('[name]');
 
         data.append('file', file);
         if (params instanceof Array) {
