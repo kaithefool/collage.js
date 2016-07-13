@@ -89,6 +89,10 @@ module.exports = {
         },
 
         publish: function (topic) {
+            if (!this._observers) {
+                this._observers = {};
+            }
+
             var a = this._observers[topic],
                 args = Array.prototype.slice.call(arguments, 1);
 

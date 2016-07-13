@@ -14,12 +14,15 @@ form.collage-upload {
     }
 }
 .collage-img {
-    float: left;
-    width: 25%;
-    height: 250px;
     position: relative;
-    background-size: cover;
-    background-position: center;
+    &.collage-img-bg {
+        background-size: cover;
+        background-position: center;
+        float: left;
+        display: block;
+        width: 25%;
+        height: 250px;
+    }
     .collage-progress {
         position: absolute;
         width: 100%;

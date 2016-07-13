@@ -11,7 +11,7 @@ module.exports = Collage;
 var defaults = {
     uploader: null,
     fileDrop: {},
-    sortable: false
+    sortable: true
 };
 
 function Collage (el, opts) {
@@ -34,9 +34,11 @@ function Collage (el, opts) {
             this.filedrop.subscribe('file', this.onfile.bind(this));
         }
 
-        if (this.opts.sortable) {
-            this.list = el.querySelector('.collage-list');
-            this.sortable = new Sortable(this.list);
+
+        var list = el.querySelector('.collage-list');
+        if (list && this.opts.sortable) {
+            this.list = list;
+            this.sortable = new Sortable(list);
         }
     }
 }

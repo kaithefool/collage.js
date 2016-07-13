@@ -8,7 +8,8 @@ module.exports = Img;
 var defaults = {
     uploader: null,
     url: null,
-    params: null
+    params: null,
+    mode: 'bg'
 };
 
 function Img (src, opts) {
@@ -35,9 +36,8 @@ function Img (src, opts) {
 Img.prototype = {
 
     setEl: function (progress) {
-        this.el = document.createElement('div');
-
-        this.el.className = 'collage-img';
+        this.el = document.createElement('span');
+        this.el.className = 'collage-img' + (this.opts.mode === 'bg' ? ' collage-bg': '');
 
         // progress
         if (progress) {
@@ -67,7 +67,11 @@ Img.prototype = {
     },
 
     setBg: function (src) {
-        this.el.style = 'background-image: url(' + src + ')';
+        if (this.opts.mode === 'bg') {
+            this.el.style = 'background-image: url(' + src + ')';
+        } else {
+
+        }
     },
 
     setProgress: function (progress) {
