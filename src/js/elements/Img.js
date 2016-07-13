@@ -29,19 +29,33 @@ function Img (src, opts) {
     } else {
         // url as source
         this.setEl();
-        this.setBg(src);
+        this.setSrc(src);
     }
 }
 
 Img.prototype = {
 
     setEl: function (progress) {
-        this.el = document.createElement('span');
-        this.el.className = 'collage-img' + (this.opts.mode === 'bg' ? ' collage-bg': '');
+        this.el = util.createElement('<span class="collage-img"></span>');
+
+        // inline mode
+        if (this.opts.mode === 'inline') {
+            this.img = new Image();
+            this.el.appendChild(this.img);
+        }
+        // bg mode
+        if (this.opts.mode === 'bg') {
+            this.el.className += ' collage-img-bg';
+        }
 
         // progress
         if (progress) {
-            this.el.innerHTML = '<div class="collage-progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
+            this.el.appendChild(util.createElement(
+                '<div class="collage-progress">' +
+                    '<div class="progress-bar"></div>' +
+                    '<div class="progress-text"></div>' +
+                '</div>'
+            ));
             this.progress = this.el.querySelector('.collage-progress');
             this.bar = this.el.querySelector('.progress-bar');
             this.text = this.el.querySelector('.progress-text');
@@ -59,18 +73,18 @@ Img.prototype = {
     onread: function (evt) {
         var src = resize(evt.target.result, 500, 500);
 
-        this.setBg(src);
+        this.setSrc(src);
     },
 
     onerr: function () {
 
     },
 
-    setBg: function (src) {
+    setSrc: function (src) {
         if (this.opts.mode === 'bg') {
             this.el.style = 'background-image: url(' + src + ')';
         } else {
-
+            this.img.src = src;
         }
     },
 
@@ -89,7 +103,7 @@ Img.prototype = {
     },
 
     onsuccess: function (task, res) {
-        this.setBg(res);
+        this.setSrc(res);
         this.progress.parentNode.removeChild(this.progress);
     },
 

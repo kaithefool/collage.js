@@ -16,6 +16,12 @@ module.exports = {
         el.style.transform = transform;
     },
 
+    createElement: function (html) {
+        var div = document.createElement('div');
+        div.innerHTML = html;
+        return div.firstChild;
+    },
+
     /**
      * Check if element would be selected by the specified selector string
      */

@@ -22,7 +22,10 @@
         <script>
             var el = document.getElementsByClassName('collage')[0],
                 collage = new Collage(el, {
-                    sortable: true
+                    sortable: false,
+                    img: {
+                        // mode: 'inline'
+                    }
                 });
 
             collage.add([
